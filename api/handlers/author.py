@@ -1,12 +1,12 @@
 from api import app, db, request
 from api.models.author import AuthorModel
-from api.schemas.author import authors_schema
 
 
 @app.route('/authors', methods=["GET"])
 def get_authors():
     authors = AuthorModel.query.all()
-    return authors_schema.dump(authors), 200
+    authors_dict = [author.to_dict() for author in authors]
+    return authors_dict, 200
 
 
 @app.route('/authors/<int:author_id>', methods=["GET"])
